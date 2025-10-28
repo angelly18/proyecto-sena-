@@ -1,5 +1,9 @@
+using mi_proyecto_sena.Data;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
-
+var connectionstring = builder.Configuration
+.GetConnectionString("Defaultconnection");
+builder.Services.AddDbContext<DBcontext>(Options => Options.UseNpgsql(connectionstring));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
