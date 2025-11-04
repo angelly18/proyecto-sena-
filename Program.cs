@@ -1,4 +1,6 @@
 using mi_proyecto_sena.Data;
+using mi_proyecto_sena.implementation;
+using mi_proyecto_sena.services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var connectionstring = builder.Configuration
@@ -7,7 +9,7 @@ builder.Services.AddDbContext<DBcontext>(Options => Options.UseNpgsql(connection
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+var app = builder.Build(); 
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -29,3 +31,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+builder.Services.AddScoped<Iusuarioservice, usuarioservice>();

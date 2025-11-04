@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using mi_proyecto_sena.Data;
 using mi_proyecto_sena.Models;
@@ -12,14 +13,20 @@ namespace mi_proyecto_sena.implementation
     public class usuarioservice : Iusuarioservice
     {
         private readonly DBcontext dBcontext;
-        public void crearUsuario(usuarioModel usuario)
-        {
-            throw new NotImplementedException();
-        }
+
         public usuarioservice(DBcontext dBcontext)
         {
             this.dBcontext = dBcontext;
         }
-    }
 
+        public async void crearUsuario(usuarioModel usuario)
+        {
+            if (usuario != null)
+            {
+
+                dBcontext.usuarios.Add(usuario);
+                await dBcontext.SaveChangesAsync();
+            }
+        }
+    }
 }
