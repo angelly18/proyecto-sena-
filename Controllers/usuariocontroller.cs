@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace mi_proyecto_sena.Controllers
-{
-    [Route("/user")]
+
+{   
+    [Route("user")]
     public class Usuariocontroller(Iusuarioservice usuarioservice) : Controller
     {
         private readonly Iusuarioservice usuarioservice = usuarioservice;
@@ -19,17 +20,21 @@ namespace mi_proyecto_sena.Controllers
 
         [HttpPost]
         [Route("register")]
-        public IActionResult Register(usuarioModel usuario)
+        public async Task<IActionResult> Register(usuarioModel usuario)
         {
-            if (usuario != null)
-            {
-                usuarioservice.crearUsuario(usuario);
-                return Ok("usuario creado");
-            }
-            else
-            {
-                return BadRequest("usuario no puede ser null");
-            }
-        }   
+            if (ModelState.IsValid)
+                {
+                  await usuarioservice.crearUsuario(usuario);
+            return RedirectToAction("Index", "Home");
+                }
+             return View(usuario);
+        }
+        [HttpGet]
+        [Route("register")]
+        public IActionResult register()
+        {
+            return View(); 
+        }
+
     }      
 }

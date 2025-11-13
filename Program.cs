@@ -7,9 +7,11 @@ var connectionstring = builder.Configuration
 .GetConnectionString("Defaultconnection");
 builder.Services.AddDbContext<DBcontext>(Options => Options.UseNpgsql(connectionstring));
 // Add services to the container.
+builder.Services.AddScoped<Iusuarioservice, usuarioservice>();
+builder.Services.AddScoped<IPasswoedservice, passwordservice>();
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build(); 
+var app = builder.Build();   
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -31,4 +33,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-builder.Services.AddScoped<Iusuarioservice, usuarioservice>();
